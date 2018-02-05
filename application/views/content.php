@@ -15,4 +15,5 @@
                 </div>
                 <?php  };  ?>
               </div>
+          </div>
 <!-- Content -->  
