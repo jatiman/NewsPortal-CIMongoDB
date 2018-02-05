@@ -67,28 +67,28 @@ class Blog extends CI_Controller {
 	}
 
 	public function sport(){
-		$data['berita'] = $this->M_blog->get('berita');
+		//$data['berita'] = $this->M_blog->get('berita');
 		$data['berita'] = $this->M_blog->get_sport();
 		$data['side'] = $this->M_blog->get_where();
-		$data['title'] = 'vico.com';
+		$data['title'] = 'DOTcom';
 		$data['isiberita'] = 'content';
 		$this->load->view('template',$data);
 	}
 
 	public function tekno(){
-		$data['berita'] = $this->M_blog->get('berita');
+		//$data['berita'] = $this->M_blog->get('berita');
 		$data['berita'] = $this->M_blog->get_tekno();
 		$data['side'] = $this->M_blog->get_where();
-		$data['title'] = 'vico.com';
+		$data['title'] = 'DOTcom';
 		$data['isiberita'] = 'content';
 		$this->load->view('template',$data);
 	}
 
 	public function oto(){
-		$data['berita'] = $this->M_blog->get('berita');
+		//$data['berita'] = $this->M_blog->get('berita');
 		$data['berita'] = $this->M_blog->get_oto();
 		$data['side'] = $this->M_blog->get_where();
-		$data['title'] = 'vico.com';
+		$data['title'] = 'DOTcom';
 		$data['isiberita'] = 'content';
 		$this->load->view('template',$data);	
 	}  

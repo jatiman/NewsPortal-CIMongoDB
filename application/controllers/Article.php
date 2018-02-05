@@ -36,14 +36,14 @@ class Article extends CI_Controller
 	function insert_article(){
 		$title  = $this->input->post('articleTitle');
 		$text  = $this->input->post('articleText');
-		$images = $_FILES['articlePic'];
+		//$images = $_FILES['articlePic'];
 		$category = $this->input->post('articleCategory');
-		$videos = $this->input->post('articleVid');
-		$point = $this->input->post('articlePoint');
-		$time = $this->input->post('articleTime');
-		$startPub = date('Y-m-d',strtotime($this->input->post('startPub')));
-		$endPub = date('Y-m-d',strtotime($this->input->post('endPub')));		
-		$imgUpload =0;
+		//$videos = $this->input->post('articleVid');
+		//$point = $this->input->post('articlePoint');
+		//$time = $this->input->post('articleTime');
+		//$startPub = date('Y-m-d',strtotime($this->input->post('startPub')));
+		//$endPub = date('Y-m-d',strtotime($this->input->post('endPub')));		
+		/*$imgUpload =0;
 		if(count($images['name']) == 1 && $_FILES['articlePic']['error']['0'] == '4'){
 			$imgUpload = 0;
 		}else{
@@ -55,7 +55,7 @@ class Article extends CI_Controller
 			$vidUpload = count($videos);
 		}
 		$upPic=0;
-		$upVid=0;
+		$upVid=0;*/
 		//echo $vidUpload;die();
 		//insert text article
 		$data = array(
@@ -63,6 +63,8 @@ class Article extends CI_Controller
 			"title" => $title,
 			"content" => $text,
 			"date_published" => date('Y-m-d'),
+			"category"	=> $category,
+			"createdBy" 	=> new MongoDB\BSON\ObjectId($this->session->userdata('user_id')),
 			//"" => $this->session->userdata('user_id'),
 		);	
 		$last_id = $this->m_article->insert_article_text('artikel',$data);
@@ -150,7 +152,8 @@ class Article extends CI_Controller
 		$articleId = $this->input->post('articleId');
 		$title  = $this->input->post('articleTitle');
 		$text  = $this->input->post('articleText');
-		
+		$category = $this->input->post('articleCategory');
+
 		$images = $_FILES['articlePic'];
 		$category = $this->input->post('articleCategory');
 		$videos = $this->input->post('articleVid');
@@ -178,7 +181,7 @@ class Article extends CI_Controller
 		$data = array(
 			"title" => $title,
 			"content" => $text,
-			"date_published" => date('Y-m-d'),
+			"category" => $category,
 		);	
 		$updateText = $this->m_article->update_article_text($data, $articleId);
 		//upload files and link if last_id is not empty

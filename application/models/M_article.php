@@ -3,7 +3,7 @@
 class M_article extends CI_Model {
 
     public function get_all(){
-		return $this->mongo_db->select(['_id','title','content','date_published'])->get('artikel');
+		return $this->mongo_db->select(['_id','title','content','date_published','category'])->get('artikel');
     }
 	
 	function insert_article_text($table,$data){

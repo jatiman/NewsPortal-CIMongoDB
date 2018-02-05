@@ -26,15 +26,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 
 		public function get_sport(){
-			return $this->mongo_db->query("SELECT * FROM berita WHERE status =2")->result();
+			return $this->mongo_db->where('category','sport')->get('artikel');
 		}
 
 		public function get_tekno(){
-			return $this->mongo_db->query("SELECT * FROM berita WHERE status =3")->result();
+			return $this->mongo_db->where('category','tekno')->get('artikel');
 		}
 
 		public function get_oto(){
-			return $this->mongo_db->query("SELECT * FROM berita WHERE status =4")->result();
+			return $this->mongo_db->where('category','otomotif')->get('artikel');
 		}
 }
 /* End of file M_blog.php */

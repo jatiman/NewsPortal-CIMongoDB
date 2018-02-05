@@ -91,7 +91,17 @@ $this->load->view('template/sidebar');
                     <textarea class="textarea" placeholder="Place some text here" required style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="articleText"><?php echo $row['content'];?></textarea>
                   </div>
                 </div>
-
+                <div class="form-group">
+                  <label for="video" class="col-sm-2 control-label">Category</label>
+                  <div class="col-md-6">
+                    <select name="articleCategory" class="form-control" required>
+                      <option value="">--Select--</option>
+                      <option value="otomotif" <?php if($row['category'] == 'otomotif'){ echo "selected";};?>>Otomotif</option>
+                      <option value="sport" <?php if($row['category'] == 'sport'){ echo "selected";};?> >Sport</option>
+                      <option value="tekno" <?php if($row['category'] == 'tekno'){ echo "selected";};?> >Tekno</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Pictures</label>
                   <div class="col-md-4">

@@ -106,14 +106,15 @@ $this->load->view('template/sidebar');
                   </div>
                 </div>
 
-                <div id="catDiv">
-                  <div class="form-group">
-                    <label for="video" class="col-sm-2 control-label">Category</label>
-                    <div class="col-md-8">
-                      <ol class="tree">
-                        <?php //getDataTree();?>
-                      </ol>
-                    </div>
+                <div class="form-group">
+                  <label for="video" class="col-sm-2 control-label">Category</label>
+                  <div class="col-md-6">
+                    <select name="articleCategory" class="form-control" required>
+                      <option value="" default>--Select--</option>
+                      <option value="otomotif">Otomotif</option>
+                      <option value="sport">Sport</option>
+                      <option value="tekno">Tekno</option>
+                    </select>
                   </div>
                 </div>
                 <div id="vidDiv">

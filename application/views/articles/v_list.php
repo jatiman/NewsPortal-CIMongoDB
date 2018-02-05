@@ -43,7 +43,6 @@ $this->load->view('template/sidebar');
                     <th>No</th>
                     <th>Judul Berita</th>
                     <th>Category</th>
-                    <th>Dibuat Oleh</th>
                     <th>Tanggal Dipublikasi</th>
                     <th>Action</th>
                   </tr>
@@ -54,8 +53,7 @@ $this->load->view('template/sidebar');
                   <tr class="rowdata_<?php echo $row['_id']; ?>">
                     <td><?php echo ++$no;?></td>
                     <td><?php echo $row['title'];?></td>
-                    <td><?php //echo $row[''];?></td>
-                    <td><?php //echo $row->pbUsername;?></td>
+                    <td><?php echo $row['category'];?></td>
                     <td><?php echo $row['date_published'];?></td>
                     <td>
                       <a href="<?php echo base_url().'article/edit_article/'.$row['_id'];?>" title="Edit"><i class="fa fa-pencil-square"></i></a>

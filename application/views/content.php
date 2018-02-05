@@ -9,11 +9,10 @@
                         <a href="<?php echo base_url().'blog/detail/'.$brt['_id']; ?>"><h3><?php echo $brt['title'];?></h3></a>
                         <a href=""><i class="fa fa-user-circle-o" aria-hidden="true"></i>DOTcom | <?php echo $brt['date_published'];?></a>
                         <p>
-                          <?php echo word_limiter($brt['content'],50);?>
+                          <?php echo word_limiter($brt['content'],35);?>
                         </p>
                     </div>
                 </div>
-                <?php  };  ?>
-              </div>
-          </div>
+                <?php };  ?>
+            </div>
 <!-- Content -->  

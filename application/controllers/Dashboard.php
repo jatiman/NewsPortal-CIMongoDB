@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller {
 
 	function index()
 	{
-		$config['title'] = 'gtPlayBook';
+		$config['title'] = 'DOTcom';
 		$config['page_title'] = 'Dashboard';
 		$config['berita'] = $this->m_dashboard->articles('artikel');
 		$config['total_articles'] = $this->m_dashboard->total_articles('artikel');
@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	function article_rank(){
-		$config['title'] = 'gtPlayBook';
+		$config['title'] = 'DOTcom';
 		$config['page_title'] = 'Ranking Artikel';
 		$config['page_subtitle'] = '';
 		$config['rank_title'] = 'Ranking Berita Berdasarkan Jumlah Komentar';

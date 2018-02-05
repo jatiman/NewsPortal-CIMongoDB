@@ -18,7 +18,7 @@ class Management_user extends CI_Controller
 	{
 		$config['title'] = 'DOTcom';
 		$config['page_title'] = 'Management User';
-		$config['page_subtitle'] = 'User List';
+		$config['page_subtitle'] = 'Daftar user';
 	    $config['user_list'] = $this->m_management_user->get_all();
         //$config['group_list'] = $this->m_management_user->get_all_group();
        
