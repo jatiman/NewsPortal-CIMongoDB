@@ -16,7 +16,7 @@ $this->load->view('template/sidebar');
     <section class="content-header">
       <h1>
         <?php echo $page_title;?>
-        <small><?php //echo $page_subtitle?></small>
+        <small><?php echo $page_subtitle?></small>
       </h1>
       <ol class="breadcrumb">
         <?php //$this->load->view('template/breadcrumb');?>

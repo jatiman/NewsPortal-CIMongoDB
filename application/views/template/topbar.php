@@ -5,9 +5,9 @@
         <header class="main-header">
             <!-- <a href="<?php echo base_url();?>" class="logo"><b>gtEvaluasi</b></a> -->
             <a href="<?php echo base_url();?>" class="logo">
-             <span class="logo-mini"><b>GT</b>E</span>
+             <span class="logo-mini"><b>D</b> |</span>
       <!-- logo for regular state and mobile devices -->
-             <span class="logo-lg">GTEvaluasi</span>
+             <span class="logo-lg">DOTcom</span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -22,16 +22,16 @@
                     <ul class="nav navbar-nav">
                         
                         <!-- Notifications: style can be found in dropdown.less -->
-                        <li class="dropdown notifications-menu">
+                        <!--<li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">10</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="header">There're 10 new articles</li>
-                                <li>
+                                <li>-->
                                     <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
+                                    <!-- <ul class="menu">
                                         <li>
                                             <a href="#">
                                                 <i class="fa fa-users text-aqua"></i> 1. ASDF
@@ -41,7 +41,7 @@
                                 </li>
                                 <li class="footer"><a href="#">View all</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

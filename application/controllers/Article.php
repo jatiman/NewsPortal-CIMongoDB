@@ -16,9 +16,9 @@ class Article extends CI_Controller
 
 	function index()
 	{
-		$config['title'] 	 = 'gtPlayBook | Manage Articles';
-		$config['page_title'] = 'Articles';
-		$config['page_subtitle'] = 'Article List';
+		$config['title'] = 'DOTcom';
+		$config['page_title'] = 'Berita';
+		$config['page_subtitle'] = 'Daftar Berita';
 	    $config['article_list'] = $this->m_article->get_all();	    
        
 		$this->load->view('articles/v_list', $config);
@@ -26,9 +26,9 @@ class Article extends CI_Controller
 
 	function add_article()
 	{
-		$config['title'] 	 = 'gtPlayBook | Manage Articles';
-		$config['page_title'] = 'Articles';
-		$config['page_subtitle'] = 'Add New Article';
+		$config['title'] = 'DOTcom';
+		$config['page_title'] = 'Berita';
+		$config['page_subtitle'] = 'Tambah Berita';
        
 		$this->load->view('articles/v_add', $config);
 	}
@@ -136,9 +136,9 @@ class Article extends CI_Controller
 
 	function edit_article($id)
 	{
-		$config['title'] 	 = 'gtPlayBook | Manage Articles';
-		$config['page_title'] = 'Articles';
-		$config['page_subtitle'] = 'Edit Article';
+		$config['title'] = 'DOTcom';
+		$config['page_title'] = 'Berita';
+		$config['page_subtitle'] = 'Ubah Berita';
 		$config['article_list'] =	$this->m_article->get_article_by_id($id);
 		//$config['video_list']	= $this->m_article->get_article_video_by_id($id);
 		//$config['image_list']	= $this->m_article->get_article_image_by_id($id);
@@ -292,8 +292,8 @@ class Article extends CI_Controller
 
 	function check_article_title(){
 		$title = $this->input->post('title');
-		$category = $this->input->post('category');
-		$this->m_article->check_article_title($title, $category);
+		//$category = $this->input->post('category');
+		$this->m_article->check_article_title($title);//, $category);
 	}
 
 	function detail_article($id)

@@ -55,7 +55,12 @@
                     <span>Berita</span>
                 </a>
             </li>
-            
+            <li>
+                <a href="<?php echo base_url().'management_user';?>" title="Management User">
+                    <i class="fa fa-users"></i>
+                    <span>Management User</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

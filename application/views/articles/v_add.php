@@ -260,7 +260,7 @@ $this->load->view('template/sidebar');
       $.ajax({ 
         type : 'POST',
         data : 'title='+title+'&category='+category,
-        url  : '<?php echo base_url(); ?>articles/check_article_title/',
+        url  : '<?php echo base_url(); ?>article/check_article_title/',
 
         success: function(response){ 
           if(response == 0){
@@ -270,7 +270,7 @@ $this->load->view('template/sidebar');
           }
           else if(response > 0){
             titleAvailResult.html('');
-            alert('Title with this category has been used! Please use other title or change the category.');
+            alert('Judul Berita sudah ada, silahkan ganti judul yang lain');
             $("#button_save").attr("disabled","disabled");
           }
           else{

@@ -79,14 +79,10 @@ class M_article extends CI_Model {
 	    } 
 	}
 
-	function check_article_title($title, $category){
-		$this->db->select('pbArticleTitle');
-        $this->db->from('pb_article');
-		$this->db->where('pbArticleTitle', $title);
-		$this->db->where('pbArticleCategoryId', $category);
-        $query = $this->db->get();
+	function check_article_title($title){
+        $query = $this->mongo_db->where('title',$title)->get('artikel');
 
-        if ($query->num_rows() > 0) {
+        if (count($query) > 0) {
             echo 1;
         }
         else {
@@ -95,7 +91,6 @@ class M_article extends CI_Model {
 	}
 
 	function update_article_text($data, $articleId){
-	//var_dump($data);die();        
 		return $this->mongo_db->set($data)->where('_id',new MongoDB\BSON\ObjectId("$articleId"))->update('artikel');
     }
 
