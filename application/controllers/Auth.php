@@ -11,6 +11,8 @@ class Auth extends CI_Controller {
         if($this->session->userdata('is_login')){
             redirect('dashboard', 'refresh');
         }else{
+            // $this->session->set_userdata('is_login', true);
+            // redirect('dashboard', 'refresh');
             if(isset($_GET['location'])){
                 $config['location']=urldecode($_GET['location']);
             }

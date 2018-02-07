@@ -2,6 +2,33 @@
 $this->load->view('template/header');
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
+
+$default_value = new stdClass();
+$default_value->title = '';
+$default_value->content = '';
+$default_value->category = '';
+$default_value->linkVideos = [];
+$default_value->point = '';
+$default_value->estimatedTime = '';
+$default_value->time_publish = '';
+$default_value->time_unpublish = '';
+$default_value->image = '';
+
+if ($this->session->userdata('edit_article')) {
+  if (isset($article_list) && is_array($article_list) && count($article_list) > 0) {
+    $article_list = array_shift($article_list);
+    $default_value->title = $article_list['title'];
+    $default_value->content = $article_list['content'];
+    $default_value->category = $article_list['category'];
+    $default_value->linkVideos = $article_list['linkVideos'];
+    $default_value->point = $article_list['point'];
+    $default_value->estimatedTime = $article_list['estimatedTime'];
+    $default_value->time_publish = $article_list['time_publish'];
+    $default_value->time_unpublish = $article_list['time_unpublish'];
+    $default_value->image = $article_list['image_metadata'];
+  }
+}
+
 ?>
   <link href="<?php echo base_url('assets/plugins/treeview/treeview_styles.css') ?>" rel="stylesheet" type="text/css" />
   <!-- wa-mediabox -->
@@ -74,34 +101,44 @@ $this->load->view('template/sidebar');
               </div><!-- /. tools -->
             </div><!-- /.box-header -->
             <div class="box-body pad">
-              <form id="fileupload" action="<?php echo base_url().'article/insert_article';?>" method="POST" enctype="multipart/form-data" class="form-horizontal">
+              <form id="fileupload" action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Title</label>
                   <div class="col-md-6">
-                    <input name="articleTitle" id="articleTitle" onkeyup="check();" class="form-control" required />
+                    <input name="articleTitle" id="articleTitle" onkeyup="check();" class="form-control" required value="<?php echo $default_value->title ?>" />
                     <span id="titleAvailResult"></span>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="video" class="col-sm-2 control-label">Article</label>
-                  <div class="col-md-10">
-                    <textarea class="textarea" placeholder="Place some text here" required style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="articleText"></textarea>
+                    <label for="video" class="col-sm-2 control-label">Article</label>
+                    <div class="col-md-10">
+                      <textarea class="textarea" placeholder="Place some text here" required style="width: 100%; height: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" name="articleText" value="<?php echo $default_value->content ?>"><?php echo $default_value->content ?></textarea>
+                    </div>
                   </div>
-                </div>
-
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Pictures</label>
                   <div class="col-md-4">
                     <span class="btn btn-success" style="float:left;">
-                        <input type="file" id="articlePic" name="articlePic[]" multiple>
+                        <input type="file" id="articlePic" name="articlePic" multiple>
                     </span>
                   </div>
                 </div>
 
-                <div class="form-group" id="picDiv" style="display:none;">
+                <div class="form-group" id="picDiv" style="display:<?php echo empty($default_value->image) ? 'none' : 'block'; ?>">
                   <label for="video" class="col-sm-2 control-label"></label>
                   <div class="col-md-10">
                     <ul class="enlarge" id="selUl">
+                      <?php 
+                      if (is_array($default_value->image) && count($default_value->image) > 0) {
+                      ?>
+                      <li>
+                        <a href="<?php echo base_url('article/show_image?filename=').$default_value->image['filename'] ?>" target="_blank" data-mediabox="Selected Pictures" data-title="<?php echo $default_value->image['filename']?>">
+                          <img src="<?php echo base_url('article/show_image?filename=').$default_value->image['filename'] ?>" alt="<?php echo $default_value->image['filename']?>" style="max-height:200px" />                        
+                        </a>
+                      <li>
+                      <?php
+                      }
+                      ?>
                     </ul>
                   </div>
                 </div>
@@ -110,10 +147,20 @@ $this->load->view('template/sidebar');
                   <label for="video" class="col-sm-2 control-label">Category</label>
                   <div class="col-md-6">
                     <select name="articleCategory" class="form-control" required>
-                      <option value="" default>--Select--</option>
-                      <option value="otomotif">Otomotif</option>
-                      <option value="sport">Sport</option>
-                      <option value="tekno">Tekno</option>
+                      <?php 
+                      if (is_array($list_category) && count($list_category) > 0) {
+                        foreach ($list_category as $key => $value) {
+                          $selected = '';
+                          if (!empty($default_value->category) && $default_value->category == $value->value) {
+                            $selected = 'selected="selected"';
+                          }
+                      ?>
+                        <option value="<?php echo $value->value?>" <?php echo $selected ?>><?php echo $value->name ?></option>
+                      <?php
+                        }
+                      }
+
+                      ?>
                     </select>
                   </div>
                 </div>
@@ -125,41 +172,62 @@ $this->load->view('template/sidebar');
                       <input type="hidden" id="hide_count" value="1"/>
                     </div>
                   </div>
+                  <?php
+                if (count($default_value->linkVideos) > 0) {
+                  foreach ($default_value->linkVideos as $key => $value) {
+                ?>
+                  <div class="form-group list-videos" id="vid<?php echo $key + 1 ?>">
+                    <label for="video" class="col-sm-2 control-label"></label>
+                    <div class="col-md-6">
+                      <input name="articleVid[]" type="url" class="form-control" placeholder="Input video url here" value="<?php echo $value ?>">
+                    </div>
+                    <a href="#" onclick="remInput('vid<?php echo $key + 1?>');">
+                      <i class="fa fa-times-circle fa-2x"></i>
+                    </a>
+                  </div>
+                <?php
+                  }
+                } else {
+                ?>
                   <div class="form-group">
                     <label for="video" class="col-sm-2 control-label"></label>
                     <div class="col-md-6">
                       <input name="articleVid[]" type="url" class="form-control" placeholder="Input video url here" />
                     </div>
                   </div>
+                <?php
+                }
+                
+                ?>
                 </div>
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Article's Point</label>
                   <div class="col-md-3">
-                    <input name="articlePoint" type="text" class="form-control" placeholder="Article's Point" onkeypress="return isNumberKey(event)" />
+                    <input name="articlePoint" type="text" class="form-control" placeholder="Article's Point" onkeypress="return isNumberKey(event)" value="<?php echo $default_value->point ?>" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Estimated Time To Learn</label>
                   <div class="col-md-3">
-                    <input name="articleTime" type="text" class="form-control" placeholder="In minutes" onkeypress="return isNumberKey(event)"  />
+                    <input name="articleTime" type="text" class="form-control" placeholder="In minutes" onkeypress="return isNumberKey(event)" value="<?php echo $default_value->estimatedTime ?>"  />
                   </div>
                   <label for="video" class="col-sm-1 control-label">(Minutes)</label>
                 </div>
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Publish Date</label>
                   <div class="col-md-3" id="vidDiv">
-                    <input name="startPub" id="startPub" type="text" class="form-control" placeholder="dd-mm-yyyy"  />
+                    <input name="startPub" id="startPub" type="text" class="form-control" placeholder="dd-mm-yyyy"  value="<?php echo $default_value->time_publish ?>"  />
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="video" class="col-sm-2 control-label">Unpublish Date</label>
                   <div class="col-md-3">
-                    <input name="endPub" type="text" id="endPub" class="form-control" placeholder="dd-mm-yyyy"  />
+                    <input name="endPub" type="text" id="endPub" class="form-control" placeholder="dd-mm-yyyy" value="<?php echo $default_value->time_unpublish ?>" />
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary" id="button_save" style="float:right;">Save</button>
+                    <button type="submit" name="submit" class="btn btn-primary" id="button_save" style="float:right;">Save</button>
                   </div>
                 </div>
               </form>
@@ -248,7 +316,11 @@ $this->load->view('template/sidebar');
   });
 
   function remInput(data){
-    $('#'+data).remove();
+    if ($('.list-videos').length > 1) {
+      $('#'+data).remove();
+    } else {
+      alert('Wajib tersisa 1 link video');
+    }
   };
 
   function check(){

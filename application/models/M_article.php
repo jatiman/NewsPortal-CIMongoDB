@@ -2,13 +2,20 @@
 
 class M_article extends CI_Model {
 
+	private $grid_fs;
+
+	public function __construct() {
+		parent::__construct();
+		$this->grid_fs = $this->mongo_db->db->getGridFS();
+	}
+
     public function get_all(){
-		return $this->mongo_db->select(['_id','title','content','date_published','category'])->get('artikel');
+		return $this->mongo_db->select(['_id','title','content','time_publish','category'])->get('artikel');
     }
 	
 	function insert_article_text($table,$data){
         return $this->mongo_db->insert($table, $data);
-    }
+	}
 
     function insert_article_image($data){
 		$this->db->trans_begin();
@@ -46,7 +53,7 @@ class M_article extends CI_Model {
     }
 	
     function get_article_by_id($id){
-        return $this->mongo_db->where('_id',new MongoDB\BSON\ObjectId("$id"))->get('artikel');
+        return $this->mongo_db->where(array('_id' => new MongoId($id)))->get('artikel');
     }
     function get_article_by_id_mobile($id){
         $query = $this->db->get_where('pb_article',array('pbArticleId'=>$id));
@@ -135,5 +142,36 @@ class M_article extends CI_Model {
 	    	return 0; 
 	    }
 	}
+
+	// add image
+	public function insert_image_filestream($data, $options, $is_edit) {
+		return $this->grid_fs->storeUpload($data, $options);
+	}
+
+	public function insert_data($table_name, $data) {
+		return $this->mongo_db->insert($table_name, $data);
+	}
+
+	public function get_image_from_filestream($where) {
+		return $this->grid_fs->findOne($where);
+	}
+
+	public function get_list_category() {
+		$arr = ['otomotif', 'sport', 'tekno'];
+		$data = [];
+		foreach ($arr as $key => $value) {
+			$tmp = new stdClass();
+			$tmp->value = $value;
+			$tmp->name = ucfirst($value);
+			array_push($data, $tmp);
+			unset($tmp);
+		}
+		return $data;
+	}
+
+	public function update_data($table_name, $data, $where) {
+		return $this->mongo_db->where($where)->set($data)->update($table_name);
+	}
+
 }
 

@@ -26,18 +26,45 @@ class Article extends CI_Controller
 
 	function add_article()
 	{
-		$config['title'] = 'DOTcom';
-		$config['page_title'] = 'Berita';
-		$config['page_subtitle'] = 'Tambah Berita';
-       
-		$this->load->view('articles/v_add', $config);
+		if (isset($_POST['submit'])) {
+			$this->insert_article();
+		} else {
+			$config['title'] = 'DOTcom';
+			$config['page_title'] = 'Berita';
+			$config['page_subtitle'] = 'Tambah Berita';
+			$config['list_category'] = $this->m_article->get_list_category();
+			$this->load->view('articles/v_add', $config);
+		}
 	}
 	
-	function insert_article(){
-		$title  = $this->input->post('articleTitle');
-		$text  = $this->input->post('articleText');
-		//$images = $_FILES['articlePic'];
-		$category = $this->input->post('articleCategory');
+	public function insert_article() {
+		$data = array(
+			'title' => $this->input->post('articleTitle'),
+			'content' => $this->input->post('articleText'),
+			'category' => $this->input->post('articleCategory'),
+			'linkVideos' => $this->input->post('articleVid'),
+			'point' => $this->input->post('articlePoint'),
+			'estimatedTime' => $this->input->post('articleTime'),
+			'time_publish' => $this->input->post('startPub'),
+			'time_unpublish' => $this->input->post('endPub')
+		);
+
+		if (isset($_FILES['articlePic']) && !empty($_FILES['articlePic']['name'])) {
+			$options['filename'] = sha1($_FILES['articlePic']['name'].date('d-M-Y'));
+			$this->m_article->insert_image_filestream('articlePic', $options);
+			$data['image_metadata'] = $options;
+			unset($options);
+		}
+		 
+		$this->m_article->insert_data('artikel', $data);
+		redirect(base_url('article'));
+	}
+	
+		// function insert_article(){
+		// $title  = $this->input->post('articleTitle');
+		// $text  = $this->input->post('articleText');
+		// //$images = $_FILES['articlePic'];
+		// $category = $this->input->post('articleCategory');
 		//$videos = $this->input->post('articleVid');
 		//$point = $this->input->post('articlePoint');
 		//$time = $this->input->post('articleTime');
@@ -58,16 +85,16 @@ class Article extends CI_Controller
 		$upVid=0;*/
 		//echo $vidUpload;die();
 		//insert text article
-		$data = array(
-			//"pbArticleCategoryId" => $category,
-			"title" => $title,
-			"content" => $text,
-			"date_published" => date('Y-m-d'),
-			"category"	=> $category,
-			"createdBy" 	=> new MongoDB\BSON\ObjectId($this->session->userdata('user_id')),
-			//"" => $this->session->userdata('user_id'),
-		);	
-		$last_id = $this->m_article->insert_article_text('artikel',$data);
+		// $data = array(
+		// 	//"pbArticleCategoryId" => $category,
+		// 	"title" => $title,
+		// 	"content" => $text,
+		// 	"date_published" => date('Y-m-d'),
+		// 	"category"	=> $category,
+		// 	"createdBy" 	=> new MongoDB\BSON\ObjectId($this->session->userdata('user_id')),
+		// 	//"" => $this->session->userdata('user_id'),
+		// );	
+		// $last_id = $this->m_article->insert_article_text('artikel',$data);
 		
 		//upload files and link if last_id is not empty
 		/*if(!empty($last_id)){
@@ -133,140 +160,63 @@ class Article extends CI_Controller
 		}else{
 			$this->session->set_flashdata('message', 'Failed to add article');
 		}*/
-		redirect(base_url() . 'article', 'refresh');	
-	}
+		// redirect(base_url() . 'article', 'refresh');	
+	// }
+	
 
 	function edit_article($id)
 	{
-		$config['title'] = 'DOTcom';
-		$config['page_title'] = 'Berita';
-		$config['page_subtitle'] = 'Ubah Berita';
-		$config['article_list'] =	$this->m_article->get_article_by_id($id);
-		//$config['video_list']	= $this->m_article->get_article_video_by_id($id);
-		//$config['image_list']	= $this->m_article->get_article_image_by_id($id);
-       
-		$this->load->view('articles/v_edit', $config);
+		if (isset($_POST['submit'])) {
+			$this->update_article($id);
+		} else {
+			$config['title'] = 'DOTcom';
+			$config['page_title'] = 'Berita';
+			$config['page_subtitle'] = 'Ubah Berita';
+			$config['article_list'] =	$this->m_article->get_article_by_id($id);
+			$config['list_category'] = $this->m_article->get_list_category();
+			$this->session->set_userdata('edit_article', true);
+
+			$this->load->view('articles/v_add', $config);
+		}
 	}
 
-	function update_article(){
-		$articleId = $this->input->post('articleId');
-		$title  = $this->input->post('articleTitle');
-		$text  = $this->input->post('articleText');
-		$category = $this->input->post('articleCategory');
+	function show_image() {
+		$image_preview = '';
+		if (isset($_GET['filename']) && !empty($_GET['filename'])) {
+			$where['filename'] = $_GET['filename'];
+			$image = $this->m_article->get_image_from_filestream($where);
+			unset($where);
+			$image = $image->getResource();
+			while (!feof($image)) {
+                $image_preview .= fread($image, 8192);
+			}
+		};
+		header('Content-type: image/jpeg');
+		echo $image_preview;
+	}
 
-		$images = $_FILES['articlePic'];
-		$category = $this->input->post('articleCategory');
-		$videos = $this->input->post('articleVid');
-		$videoIds = $this->input->post('articleVidId');
-		$point = $this->input->post('articlePoint');
-		$time = $this->input->post('articleTime');
-		$startPub = date('Y-m-d',strtotime($this->input->post('startPub')));
-		$endPub = date('Y-m-d',strtotime($this->input->post('endPub')));
-		$statusPub = $this->input->post('articleStatus');
-		$videosNew = $this->input->post('articleVidNew');		
-		$imgUpload =0;
-		/*if(count($images['name']) == 1 && $_FILES['articlePic']['error']['0'] == '4'){
-			$imgUpload = 0;
-		}else{
-			$imgUpload = count($images['name']);
-		}
-		if(count($videosNew) == 1 && $videosNew['0'] == ''){
-			$vidUploadNew = 0;
-		}else{
-			$vidUploadNew = count($videosNew);
-		}
-		$upPic=0;
-		$upVid=0;*/	
-		//insert text article
+	function update_article($id){
 		$data = array(
-			"title" => $title,
-			"content" => $text,
-			"category" => $category,
-		);	
-		$updateText = $this->m_article->update_article_text($data, $articleId);
-		//upload files and link if last_id is not empty
-		/*if(!empty($updateText)){
-			//initialize
-			if( !empty($imgUpload)){
-				$upload_conf = array(
-					'upload_path'   => realpath('uploads/article_pic/'),
-					'allowed_types' => 'gif|jpg|png',
-					'max_size'      => '3000',
-				);
+			'title' => $this->input->post('articleTitle'),
+			'content' => $this->input->post('articleText'),
+			'category' => $this->input->post('articleCategory'),
+			'linkVideos' => $this->input->post('articleVid'),
+			'point' => $this->input->post('articlePoint'),
+			'estimatedTime' => $this->input->post('articleTime'),
+			'time_publish' => $this->input->post('startPub'),
+			'time_unpublish' => $this->input->post('endPub')
+		);
 
-				$this->upload->initialize($upload_conf);
-				$upPic = 0;
-				for($i=0;$i<count($images['name']);$i++){
-					$namewithoutspace = preg_replace('/\s+/','_',$images['name'][$i]);
-					$filename = date('His').mt_rand( 10, 100)."_".$namewithoutspace;
-					
-					$_FILES['articlePic']['name'] = $filename;
-					$_FILES['articlePic']['type'] = $images['type'][$i];
-					$_FILES['articlePic']['tmp_name'] = $images['tmp_name'][$i];
-					$_FILES['articlePic']['error'] = $images['error'][$i];
-					$_FILES['articlePic']['size'] = $images['size'][$i];
-
-					if ( ! $this->upload->do_upload('articlePic'))
-					{
-						$error['upload'][] = $this->upload->display_errors();
-						$upPic = $upPic;
-					}
-					else
-					{
-						$upload_data = $this->upload->data();
-						
-						$dataFile = array(
-							'pbArticleImageArticleId' 	=> $articleId,
-							'pbArticleImagePicture'    	=> $filename,
-						);
-						
-						$insert_data = $this->m_article->insert_article_image($dataFile);
-						$upPic = $upPic+1;
-					}
-				}
-			}
-			
-			$upVid = 0;
-			for($j=0;$j<count($videos);$j++){
-				if(empty($videos[$j])){
-					$res = $this->m_article->delete_video($videoIds[$j]);
-				}else{
-					$dataVideo = array(
-							'pbArticleVideoContent'    	=> $videos[$j],
-						);
-
-					$res = $this->m_article->update_article_video($dataVideo, $videoIds[$j]);
-				}
-				if(!empty($res)){
-					$upVid = $upVid+1;
-				}
-			}
-
-			for($k=0;$k<$vidUploadNew;$k++){
-				$dataVideo = array(
-						'pbArticleVideoArticleId' 	=> $articleId,
-						'pbArticleVideoContent'    	=> $videosNew[$k],
-					);
-
-				$res = $this->m_article->insert_article_video($dataVideo);
-				if(!empty($res)){
-					$upVid = $upVid+1;
-				}
-			}
+		if (isset($_FILES['articlePic']) && !empty($_FILES['articlePic']['name'])) {
+			$options['filename'] = sha1($_FILES['articlePic']['name'].date('d-M-Y'));
+			$this->m_article->insert_image_filestream('articlePic', $options, true);
+			$data['image_metadata'] = $options;
+			unset($options);
 		}
-		if(!empty($updateText) && $upPic == $imgUpload && $upVid == (count($videos)+$vidUploadNew)) {
-			$this->session->set_flashdata('message', 'Article has been updated successfully');
-		}elseif(!empty($updateText) && $upPic != $imgUpload && $upVid == (count($videos)+$vidUploadNew)){
-			$this->session->set_flashdata('message', "Failed to upload some article's pictures");
-		}elseif(!empty($updateText) && $upPic == $imgUpload && $upVid != (count($videos)+$vidUploadNew)){
-			$this->session->set_flashdata('message', "Failed to add/update some article's videos URL");
-		}elseif(!empty($updateText) && $upPic != $imgUpload && $upVid != (count($videos)+$vidUploadNew)) {
-			$this->session->set_flashdata('message', "Failed to upload some article's pictures and videos URL");
-		}else{
-			$this->session->set_flashdata('message', 'Failed to update article');
-		}*/
-		
-		redirect(base_url() . 'article', 'refresh');	
+		 
+		$where['_id'] = new MongoId($id);
+		$this->m_article->update_data('artikel', $data, $where);
+		redirect(base_url('article'));	
 	}
 	
 	function delete($id){
