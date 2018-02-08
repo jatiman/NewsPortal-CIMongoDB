@@ -3,8 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	class M_blog extends CI_Model {
 
+		private $grid_fs;
+
+		public function __construct() {
+			parent::__construct();
+			$this->grid_fs = $this->mongo_db->db->getGridFS();
+		}
+
 		public function get(){
-			return $this->mongo_db->select(['_id','title','content','date_published'])->get('artikel');
+			return $this->mongo_db->select(['_id','title','content','date_published','image_metadata'])->get('artikel');
 		}
 
 		public function get_where(){
@@ -14,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 
 		public function get_detail($id){
-			return $this->mongo_db->where('_id',new MongoDB\BSON\ObjectId("$id"))->get('artikel');
+			return $this->mongo_db->where(array('_id' => new MongoId($id)))->get('artikel');
 		}
 
 		public function insert($table,$data){
@@ -22,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 
 		public function cariBerita($src){
-			return $this->mongo_db->where('title',new MongoDB\BSON\Regex("$src"))->get('artikel');
+			return $this->mongo_db->like('title',$src,'im',TRUE,TRUE)->get('artikel');
 		}
 
 		public function get_sport(){
@@ -35,6 +42,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		public function get_oto(){
 			return $this->mongo_db->where('category','otomotif')->get('artikel');
+		}
+
+
+		public function get_image_from_filestream($where) {
+			return $this->grid_fs->findOne($where);
 		}
 }
 /* End of file M_blog.php */

@@ -13,7 +13,6 @@ class Blog extends CI_Controller {
 	public function index(){
 		$data['berita'] = $this->M_blog->get('artikel');
 		$data['side'] = $this->M_blog->get_where('artikel');
-		//var_dump($data['side']);die();
 		$data['title'] = 'DOTcom';
 		$data['isiberita'] = 'content';
 		$this->load->view('template',$data);
@@ -91,6 +90,21 @@ class Blog extends CI_Controller {
 		$data['title'] = 'DOTcom';
 		$data['isiberita'] = 'content';
 		$this->load->view('template',$data);	
+	}
+
+	function show_image() {
+		$image_preview = '';
+		if (isset($_GET['filename']) && !empty($_GET['filename'])) {
+			$where['filename'] = $_GET['filename'];
+			$image = $this->M_blog->get_image_from_filestream($where);
+			unset($where);
+			$image = $image->getResource();
+			while (!feof($image)) {
+                $image_preview .= fread($image, 8192);
+			}
+		};
+		header('Content-type: image/jpeg');
+		echo $image_preview;
 	}  
 }
 

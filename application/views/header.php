@@ -17,6 +17,49 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+      <script type="text/javascript" src="<?php echo base_url();?>assets/plugins/wa-mediabox/wa-mediabox.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/plugins/wa-mediabox/wa-mediabox.min.css" />
+
+  <style type="text/css">
+    .warning {
+      background:#fff8c4;
+      border:1px solid #f2c779;
+      padding: 24px;
+    }
+
+    ul.enlarge{
+    list-style-type:none; /*remove the bullet point*/
+    margin-left:0;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    }
+
+    ul.enlarge li {
+    position: relative;
+    display: inline-block;
+    margin-right: 15px;
+    margin-left: 15px;
+
+    }
+    ul.enlarge li img{
+    background-color:#eae9d4;
+    padding: 6px;
+    -webkit-box-shadow: 0 0 6px rgba(132, 132, 132, .75);
+    -moz-box-shadow: 0 0 6px rgba(132, 132, 132, .75);
+    box-shadow: 0 0 6px rgba(132, 132, 132, .75);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    }
+    /**IE Hacks - see http://css3pie.com/ for more info on how to use CS3Pie and to download the latest version**/
+    ul.enlarge img{
+    behavior: url(pie/PIE.htc);
+    }
+    ul.enlarge a i{
+      position:absolute; top:0; right:0; 
+    }
+  </style>
   </head>
   <body>
 <!-- Menu -->

@@ -165,19 +165,19 @@ if ($this->session->userdata('edit_article')) {
                   </div>
                 </div>
                 <div id="vidDiv">
-                  <div class="form-group">
+                  <!--<div class="form-group">
                     <label for="video" class="col-sm-2 control-label">Video URL</label>
                     <div class="col-md-6">
                       <button type="button" id="btn_add" class="btn btn-primary" style="padding:3px 6px 3px 6px;margin-top:-2px;" action="javascript;;"><i class="fa fa-plus"></i> Add</button>
                       <input type="hidden" id="hide_count" value="1"/>
                     </div>
-                  </div>
+                  </div>-->
                   <?php
                 if (count($default_value->linkVideos) > 0) {
                   foreach ($default_value->linkVideos as $key => $value) {
                 ?>
                   <div class="form-group list-videos" id="vid<?php echo $key + 1 ?>">
-                    <label for="video" class="col-sm-2 control-label"></label>
+                    <label for="video" class="col-sm-2 control-label">Video URL</label>
                     <div class="col-md-6">
                       <input name="articleVid[]" type="url" class="form-control" placeholder="Input video url here" value="<?php echo $value ?>">
                     </div>
@@ -190,7 +190,7 @@ if ($this->session->userdata('edit_article')) {
                 } else {
                 ?>
                   <div class="form-group">
-                    <label for="video" class="col-sm-2 control-label"></label>
+                    <label for="video" class="col-sm-2 control-label">Video URL</label>
                     <div class="col-md-6">
                       <input name="articleVid[]" type="url" class="form-control" placeholder="Input video url here" />
                     </div>

@@ -5,7 +5,24 @@
                   <?php //var_dump($detail);?>
                   <h2><?php echo $detail[0]['title'];?></h2>
 
-                  <img src="<?php //echo base_url().'assets/img/'.$detail[0]['image'];?>" class="img-thumbnail">
+                  <div class="form-group" id="picDiv" style="display:<?php echo empty($detail[0]['image_metadata']) ? 'none' : 'block'; ?>">
+                        <label for="video" class="col-sm-2 control-label"></label>
+                        <div class="col-md-10">
+                          <ul class="enlarge" id="selUl">
+                            <?php 
+                            if (is_array($detail[0]['image_metadata']) && count($detail[0]['image_metadata']) > 0) {
+                            ?>
+                            <li>
+                              <a href="<?php echo base_url('blog/show_image?filename=').$detail[0]['image_metadata']['filename'] ?>" target="_blank" data-mediabox="Selected Pictures" data-title="<?php echo $detail[0]['image_metadata']['filename']?>">
+                                <img src="<?php echo base_url('blog/show_image?filename=').$detail[0]['image_metadata']['filename'] ?>" alt="<?php echo $detail[0]['image_metadata']['filename']?>" style="max-height:200px" />                        
+                              </a>
+                            <li>
+                            <?php
+                            }
+                            ?>
+                          </ul>
+                        </div>
+                  </div>
                   <hr>
                   <p align="justify">
                         <?php echo $detail[0]['content'];?>

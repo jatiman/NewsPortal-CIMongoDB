@@ -43,10 +43,10 @@ class Article extends CI_Controller
 			'content' => $this->input->post('articleText'),
 			'category' => $this->input->post('articleCategory'),
 			'linkVideos' => $this->input->post('articleVid'),
-			'point' => $this->input->post('articlePoint'),
-			'estimatedTime' => $this->input->post('articleTime'),
-			'time_publish' => $this->input->post('startPub'),
-			'time_unpublish' => $this->input->post('endPub')
+			//'point' => $this->input->post('articlePoint'),
+			//'estimatedTime' => $this->input->post('articleTime'),
+			'date_published' => date('d-M-Y)',
+			//'time_unpublish' => $this->input->post('endPub')
 		);
 
 		if (isset($_FILES['articlePic']) && !empty($_FILES['articlePic']['name'])) {
@@ -58,111 +58,7 @@ class Article extends CI_Controller
 		 
 		$this->m_article->insert_data('artikel', $data);
 		redirect(base_url('article'));
-	}
-	
-		// function insert_article(){
-		// $title  = $this->input->post('articleTitle');
-		// $text  = $this->input->post('articleText');
-		// //$images = $_FILES['articlePic'];
-		// $category = $this->input->post('articleCategory');
-		//$videos = $this->input->post('articleVid');
-		//$point = $this->input->post('articlePoint');
-		//$time = $this->input->post('articleTime');
-		//$startPub = date('Y-m-d',strtotime($this->input->post('startPub')));
-		//$endPub = date('Y-m-d',strtotime($this->input->post('endPub')));		
-		/*$imgUpload =0;
-		if(count($images['name']) == 1 && $_FILES['articlePic']['error']['0'] == '4'){
-			$imgUpload = 0;
-		}else{
-			$imgUpload = count($images['name']);
-		}
-		if(count($videos) == 1 && $videos['0'] == ''){
-			$vidUpload = 0;
-		}else{
-			$vidUpload = count($videos);
-		}
-		$upPic=0;
-		$upVid=0;*/
-		//echo $vidUpload;die();
-		//insert text article
-		// $data = array(
-		// 	//"pbArticleCategoryId" => $category,
-		// 	"title" => $title,
-		// 	"content" => $text,
-		// 	"date_published" => date('Y-m-d'),
-		// 	"category"	=> $category,
-		// 	"createdBy" 	=> new MongoDB\BSON\ObjectId($this->session->userdata('user_id')),
-		// 	//"" => $this->session->userdata('user_id'),
-		// );	
-		// $last_id = $this->m_article->insert_article_text('artikel',$data);
-		
-		//upload files and link if last_id is not empty
-		/*if(!empty($last_id)){
-			if(!empty($imgUpload)){
-				//initialize
-				$upload_conf = array(
-					'upload_path'   => realpath('uploads/article_pic/'),
-					'allowed_types' => 'gif|jpg|png',
-					'max_size'      => '3000',
-				);
-
-				$this->upload->initialize($upload_conf);
-				for($i=0;$i<count($images['name']);$i++){
-					$namewithoutspace = preg_replace('/\s+/','_',$images['name'][$i]);
-					$filename = date('His').mt_rand( 10, 100)."_".$namewithoutspace;
-					
-					$_FILES['articlePic']['name'] = $filename;
-					$_FILES['articlePic']['type'] = $images['type'][$i];
-					$_FILES['articlePic']['tmp_name'] = $images['tmp_name'][$i];
-					$_FILES['articlePic']['error'] = $images['error'][$i];
-					$_FILES['articlePic']['size'] = $images['size'][$i];
-
-					if ( ! $this->upload->do_upload('articlePic'))
-					{
-						$error['upload'][] = $this->upload->display_errors();
-						$upPic = $upPic;
-					}
-					else
-					{
-						$upload_data = $this->upload->data();
-						
-						$dataFile = array(
-							'pbArticleImageArticleId' 			=> $last_id,
-							'pbArticleImagePicture'    	=> $filename,
-						);
-						
-						$insert_data = $this->m_article->insert_article_image($dataFile);
-						$upPic = $upPic+1;
-					}
-				}
-			}
-			for($j=0;$j<$vidUpload;$j++){
-				$dataVideo = array(
-						'pbArticleVideoArticleId' 	=> $last_id,
-						'pbArticleVideoContent'    	=> $videos[$j],
-					);
-
-				$res = $this->m_article->insert_article_video($dataVideo);
-				if(!empty($res)){
-					$upVid = $upVid+1;
-				}
-			}
-		}*/
-		
-		/*if(!empty($last_id) && $upPic == $imgUpload && $upVid == $vidUpload) {
-			$this->session->set_flashdata('message', 'Article has been added successfully');
-		}elseif(!empty($last_id) && $upPic != $imgUpload && $upVid == $vidUpload){
-			$this->session->set_flashdata('message', "Failed to upload some article's pictures");
-		}elseif(!empty($last_id) && $upPic == $imgUpload && $upVid != $vidUpload){
-			$this->session->set_flashdata('message', "Failed to add some article's videos URL");
-		}elseif(!empty($last_id) && $upPic != $imgUpload && $upVid != $vidUpload) {
-			$this->session->set_flashdata('message', "Failed to upload some article's pictures and videos URL");
-		}else{
-			$this->session->set_flashdata('message', 'Failed to add article');
-		}*/
-		// redirect(base_url() . 'article', 'refresh');	
-	// }
-	
+	}	
 
 	function edit_article($id)
 	{
@@ -201,10 +97,7 @@ class Article extends CI_Controller
 			'content' => $this->input->post('articleText'),
 			'category' => $this->input->post('articleCategory'),
 			'linkVideos' => $this->input->post('articleVid'),
-			'point' => $this->input->post('articlePoint'),
-			'estimatedTime' => $this->input->post('articleTime'),
-			'time_publish' => $this->input->post('startPub'),
-			'time_unpublish' => $this->input->post('endPub')
+			'date_published' => $this->input->post('startPub'),
 		);
 
 		if (isset($_FILES['articlePic']) && !empty($_FILES['articlePic']['name'])) {
@@ -247,22 +140,5 @@ class Article extends CI_Controller
 		$title = $this->input->post('title');
 		//$category = $this->input->post('category');
 		$this->m_article->check_article_title($title);//, $category);
-	}
-
-	function detail_article($id)
-	{
-		$config['title'] 	 = 'gtPlayBook | Manage Articles';
-		$config['page_title'] = 'Articles';
-		$config['page_subtitle'] = 'Detail Article';
-		$config['article_list'] =	$this->m_article->get_article_by_id($id);	
-		$config['video_list']	= $this->m_article->get_article_video_by_id($id);
-		$config['image_list']	= $this->m_article->get_article_image_by_id($id);
-       
-		$this->load->view('v_detail', $config);
-	}
-	function article($id)
-	{
-		$query = $this->db->get_where('pb_article',array('pbArticleId'=>$id))->row();     
-		$this->load->view('v_article', $query);
 	}
 }

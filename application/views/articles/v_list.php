@@ -54,7 +54,7 @@ $this->load->view('template/sidebar');
                     <td><?php echo ++$no;?></td>
                     <td><?php echo $row['title'];?></td>
                     <td><?php echo $row['category'];?></td>
-                    <td><?php echo $row['time_publish'];?></td>
+                    <td><?php echo $row['date_published'];?></td>
                     <td>
                       <a href="<?php echo base_url().'article/edit_article/'.$row['_id'];?>" title="Edit"><i class="fa fa-pencil-square"></i></a>
                       <a href="javascript:;" onclick="deletedata('<?php echo $row['_id']; ?>')" title="Delete"><i class="fa fa-trash-o"></i></a>
