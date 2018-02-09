@@ -141,7 +141,7 @@ $this->load->view('template/sidebar');
         $('input[name="realName"]').val(json['0'].realname);
         $('input[name="username"]').val(json['0'].username);
         $('input[name="email"]').val(json['0'].email);
-        $('input[name="userId"]').val(json['0']._id);
+        $('input[name="userId"]').val(json['0']._id['$id']);
         $('#noticePassword').val('Keep password blank to keep the old password');
         
         $('#title_popup').text(' Edit User');

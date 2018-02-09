@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 
 		public function get(){
-			return $this->mongo_db->select(['_id','title','content','date_published','image_metadata'])->get('artikel');
+			return $this->mongo_db->select(['_id','title','content','date_published','image_metadata'])->order_by(array('date_published' => 'DESC'))->get('artikel');
 		}
 
 		public function get_where(){

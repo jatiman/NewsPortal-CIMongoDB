@@ -35,17 +35,13 @@ class Auth extends CI_Controller {
                 var_dump($result);
                 if ( count($result) > 0 ){                                                                                                                                
                     foreach ($result as $res){ 
-                var_dump($res);
-                        //$data_last_login = array('pbUserLastLogin' => date('Y-m-d H:i:s'));
-                        //$this->db->where('pbUserId', $row->pbUserId);
-                        //$q_last_login = $this->db->update('pb_user', $data_last_login);
+                        $this->mongo_db->set('last_login',date('Y-m-d H:i:s'))->where(array('username' => $user))->update('user');
 
                         $sess['is_login'] = TRUE;
                         $sess['email'] = $res['email'];
                         $sess['uname'] = $res['username'];
-                        //$sess['last_login'] = $row->pbUserLastLogin;
-                        //$sess['group_name'] = $row->pbGroupName;
-                        //$sess['user_pic'] = $row->pbUserPic;
+                        $sess['last_login'] = $res['last_login'];
+
                         $this->session->set_userdata($sess);                                                                          
                     }
                     if(isset($location)){

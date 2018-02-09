@@ -42,7 +42,7 @@ $this->load->view('template/sidebar');
                     <div class="icon">
                         <i class="fa fa-book"></i>
                     </div>
-                    <a href="<?php echo base_url().'articles'?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?php echo base_url().'article'?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <!-- <div class="col-lg-3 col-xs-6"> -->
@@ -68,7 +68,7 @@ $this->load->view('template/sidebar');
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a href="<?php echo base_url().'management_user'?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <!-- <div class="col-lg-3 col-xs-6"> -->
@@ -85,33 +85,6 @@ $this->load->view('template/sidebar');
                 </div>
             </div> --><!-- ./col -->
         </div><!-- /.row -->
-        <!-- Main row -->
-        <div class="row">
-            <section class="col-lg-12 connectedSortable">
-                <!-- TOP 10 Article -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <i class="ion ion-clipboard"></i>
-                        <h3 class="box-title">Top 10 Articles</h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <ul class="todo-list">
-                            <?php //$i=0;foreach($topten_articles as $articles){?>
-                            <li>
-                                <span><?php //echo ++$i;?>. </span>
-                                <span class="text"><?php //echo $articles->pbArticleTitle;?></span>
-                                <span class="text stars"><?php //echo $articles->average;?></span>
-                                <span class="text"><?php //echo '(rated by '.$articles->tot_read.' people)';?></span>
-                            </li>
-                            <?php //}?>
-                        </ul>
-                    </div><!-- /.box-body -->
-                    <div class="box-footer clearfix no-border">
-                        <a href="<?php echo base_url().'dashboard/article_rank'?>"><button class="btn btn-default pull-right"><i class="fa fa-eye"></i> View All</button></a>
-                    </div>
-                </div><!-- /.box -->
-            </section><!-- /.Left col -->
-        </div><!-- /.row (main row) -->
 
     </section><!-- /.content -->
 </div>

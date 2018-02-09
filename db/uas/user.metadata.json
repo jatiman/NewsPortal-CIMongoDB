@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"uas.user"}],"uuid":"db2c8d06b8874d83bd73af53fd72a7aa"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"uas.user"},{"v":2,"key":{"username":1.0},"name":"username_1","ns":"uas.user"}],"uuid":"9c708d0305644d18900f6093b63a3c3f"}

@@ -8,10 +8,7 @@ $default_value->title = '';
 $default_value->content = '';
 $default_value->category = '';
 $default_value->linkVideos = [];
-$default_value->point = '';
-$default_value->estimatedTime = '';
-$default_value->time_publish = '';
-$default_value->time_unpublish = '';
+$default_value->date_published = '';
 $default_value->image = '';
 
 if ($this->session->userdata('edit_article')) {
@@ -21,10 +18,7 @@ if ($this->session->userdata('edit_article')) {
     $default_value->content = $article_list['content'];
     $default_value->category = $article_list['category'];
     $default_value->linkVideos = $article_list['linkVideos'];
-    $default_value->point = $article_list['point'];
-    $default_value->estimatedTime = $article_list['estimatedTime'];
-    $default_value->time_publish = $article_list['time_publish'];
-    $default_value->time_unpublish = $article_list['time_unpublish'];
+    $default_value->date_published = $article_list['date_published'];
     $default_value->image = $article_list['image_metadata'];
   }
 }
@@ -199,31 +193,6 @@ if ($this->session->userdata('edit_article')) {
                 }
                 
                 ?>
-                </div>
-                <div class="form-group">
-                  <label for="video" class="col-sm-2 control-label">Article's Point</label>
-                  <div class="col-md-3">
-                    <input name="articlePoint" type="text" class="form-control" placeholder="Article's Point" onkeypress="return isNumberKey(event)" value="<?php echo $default_value->point ?>" />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="video" class="col-sm-2 control-label">Estimated Time To Learn</label>
-                  <div class="col-md-3">
-                    <input name="articleTime" type="text" class="form-control" placeholder="In minutes" onkeypress="return isNumberKey(event)" value="<?php echo $default_value->estimatedTime ?>"  />
-                  </div>
-                  <label for="video" class="col-sm-1 control-label">(Minutes)</label>
-                </div>
-                <div class="form-group">
-                  <label for="video" class="col-sm-2 control-label">Publish Date</label>
-                  <div class="col-md-3" id="vidDiv">
-                    <input name="startPub" id="startPub" type="text" class="form-control" placeholder="dd-mm-yyyy"  value="<?php echo $default_value->time_publish ?>"  />
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="video" class="col-sm-2 control-label">Unpublish Date</label>
-                  <div class="col-md-3">
-                    <input name="endPub" type="text" id="endPub" class="form-control" placeholder="dd-mm-yyyy" value="<?php echo $default_value->time_unpublish ?>" />
-                  </div>
                 </div>
                 <div class="form-group">
                   <div class="col-md-12">

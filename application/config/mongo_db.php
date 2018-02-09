@@ -28,7 +28,7 @@
 $config['mongo_db']['active'] = 'default';
 
 $config['mongo_db']['default']['no_auth'] = true;
-$config['mongo_db']['default']['hostname'] = 'localhost';
+$config['mongo_db']['default']['hostname'] = '10.1.1.2';
 $config['mongo_db']['default']['port'] = '27017';
 $config['mongo_db']['default']['username'] = '';
 $config['mongo_db']['default']['password'] = '';

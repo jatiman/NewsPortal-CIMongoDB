@@ -13,6 +13,11 @@ class Blog extends CI_Controller {
 	public function index(){
 		$data['berita'] = $this->M_blog->get('artikel');
 		$data['side'] = $this->M_blog->get_where('artikel');
+		/*$aa=json_decode(json_encode($data['side']),true);
+		for($i=0;$i<count($aa);$i++){
+			$aa[$i]['total_comment'] = $this->mongo_db->where('artikel_id', $aa[0]['_id']['$id'])->count('comment');
+		}
+		$data['side']=json_decode(json_encode($aa),FALSE);*/
 		$data['title'] = 'DOTcom';
 		$data['isiberita'] = 'content';
 		$this->load->view('template',$data);
@@ -40,7 +45,7 @@ class Blog extends CI_Controller {
 				'artikel_id' => $berita_id,
 				'nickname' => $nama,
 				'email' => $email,
-				'date' => date('Y-m-d'),
+				'date' => date('Y-m-d H:i:s'),
 				'comment' => $komentar
 			);
 

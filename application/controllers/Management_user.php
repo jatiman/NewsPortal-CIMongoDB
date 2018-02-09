@@ -38,7 +38,7 @@ class Management_user extends CI_Controller
 				"realname"    => $pbRealName,
 				"email"     	=> $pbUserEmail,
 				"dateCreated" => date('Y-m-d H:i:s'),
-				"createdBy" 	=> new MongoDB\BSON\ObjectId($this->session->userdata('user_id'))
+				"createdBy" 	=> new MongoId($this->session->userdata('user_id'))
 				);
 
 		$action = $this->m_management_user->insert_user($data);

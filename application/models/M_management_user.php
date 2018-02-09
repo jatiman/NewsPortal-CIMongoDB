@@ -15,7 +15,7 @@ class M_management_user extends CI_Model {
     }
 	
 	function get_user_by_id($id) {
-        return $this->mongo_db->where('_id',new MongoDB\BSON\ObjectId("$id"))->get('user');
+        return $this->mongo_db->where('_id',new MongoId("$id"))->get('user');
     }
 	
 	function insert_user($data){
@@ -23,11 +23,11 @@ class M_management_user extends CI_Model {
     }
 	
 	function update_user($data, $userId){
-        return $this->mongo_db->set($data)->where('_id',new MongoDB\BSON\ObjectId("$userId"))->update('user');		
+        return $this->mongo_db->set($data)->where('_id',new MongoId("$userId"))->update('user');		
     }
 	
 	function delete_user($id) {
-        $query = $this->mongo_db->where('_id',new MongoDB\BSON\ObjectId("$id"))->delete('user');
+        $query = $this->mongo_db->where('_id',new MongoId("$id"))->delete('user');
         if ($query) { 
 			echo 1; 
 	    } 

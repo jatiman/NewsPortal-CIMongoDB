@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"uas.comment"}],"uuid":"b8757f87015849de971f29200b375923"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"uas.comment"},{"v":2,"key":{"nickname":1.0},"name":"nickname_1","ns":"uas.comment"}],"uuid":"e383ea6386624e188b11ea1398c1db0c"}

@@ -43,10 +43,7 @@ class Article extends CI_Controller
 			'content' => $this->input->post('articleText'),
 			'category' => $this->input->post('articleCategory'),
 			'linkVideos' => $this->input->post('articleVid'),
-			//'point' => $this->input->post('articlePoint'),
-			//'estimatedTime' => $this->input->post('articleTime'),
-			'date_published' => date('d-M-Y)',
-			//'time_unpublish' => $this->input->post('endPub')
+			'date_published' => date('d-M-Y'),
 		);
 
 		if (isset($_FILES['articlePic']) && !empty($_FILES['articlePic']['name'])) {
@@ -97,7 +94,6 @@ class Article extends CI_Controller
 			'content' => $this->input->post('articleText'),
 			'category' => $this->input->post('articleCategory'),
 			'linkVideos' => $this->input->post('articleVid'),
-			'date_published' => $this->input->post('startPub'),
 		);
 
 		if (isset($_FILES['articlePic']) && !empty($_FILES['articlePic']['name'])) {
@@ -113,11 +109,6 @@ class Article extends CI_Controller
 	}
 	
 	function delete($id){
-		//$path = realpath('uploads/article_pic/');
-		//$filename = $this->m_article->get_file_name($id);
-		//foreach ($filename as $row) {
-		//	unlink($path.'/'.$row->pbArticleImagePicture);		
-		//}
 		$this->m_article->delete_article($id);
 	}
 
@@ -138,7 +129,6 @@ class Article extends CI_Controller
 
 	function check_article_title(){
 		$title = $this->input->post('title');
-		//$category = $this->input->post('category');
-		$this->m_article->check_article_title($title);//, $category);
+		$this->m_article->check_article_title($title);
 	}
 }
